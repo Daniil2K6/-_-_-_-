@@ -1,0 +1,3 @@
+name = "Discord"
+url = "https://discord.com"
+description = "Платформа для общения"

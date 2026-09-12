@@ -1,0 +1,3 @@
+name = "Telegram"
+url = "https://telegram.org"
+description = "Мессенджер"
