@@ -1,0 +1,3 @@
+name = "Apple"
+url = "https://www.apple.com"
+description = "Официальный сайт Apple"

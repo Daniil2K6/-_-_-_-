@@ -55,6 +55,26 @@ def show_all_services():
         print("  Список сервисов пуст.\n")
 
 
+def list_services():
+    """Вывести список всех сервисов без проверки."""
+    services_dir = os.path.join(os.path.dirname(__file__), "services")
+    print("\n=== Список сервисов ===\n")
+
+    count = 0
+    for filename in sorted(os.listdir(services_dir)):
+        if filename.endswith(".py") and not filename.startswith("__"):
+            module_name = filename[:-3]
+            module = importlib.import_module(f"services.{module_name}")
+            print(f"  {module.name}")
+            print(f"    URL: {module.url}")
+            print(f"    Описание: {module.description}")
+            print()
+            count += 1
+
+    if count == 0:
+        print("  Список сервисов пуст.\n")
+
+
 def add_service(name, url, description):
     """Добавить новый сервис, создав файл в папке services/."""
     safe_name = name.lower().replace(" ", "_")
@@ -136,9 +156,10 @@ def print_menu():
     print("\n=== ServiceMonitor ===\n")
     print("1. Проверить все сервисы")
     print("2. Проверить сервис выборочно")
-    print("3. Добавить сервис")
-    print("4. Удалить сервис")
-    print("5. Выход\n")
+    print("3. Показать список сервисов")
+    print("4. Добавить сервис")
+    print("5. Удалить сервис")
+    print("6. Выход\n")
 
 
 def main():
@@ -165,6 +186,9 @@ def main():
                     check_service_status(module.name, module.url)
 
         elif choice == "3":
+            list_services()
+
+        elif choice == "4":
             print("\nДобавление нового сервиса:")
             name = input("  Название: ").strip()
             url = input("  URL для проверки: ").strip()
@@ -174,7 +198,7 @@ def main():
             else:
                 print("  Название и URL обязательны.")
 
-        elif choice == "4":
+        elif choice == "5":
             index = get_service_choice()
             if index is not None:
                 module_name = get_filename_by_index(index)
@@ -182,7 +206,7 @@ def main():
                     module = importlib.import_module(f"services.{module_name}")
                     remove_service(module.name)
 
-        elif choice == "5":
+        elif choice == "6":
             print("\nДо свидания!")
             break
 
